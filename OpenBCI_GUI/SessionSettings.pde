@@ -102,6 +102,7 @@ class SessionSettings {
     int spectMaxFrqSave;
     int spectSampleRateSave;
     int spectLogLinSave;
+    int globalColorScheme;
 
     //default configuration settings file location and file name variables
     private String sessionPath = "";

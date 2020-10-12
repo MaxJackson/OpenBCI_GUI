@@ -54,6 +54,12 @@ class W_Accelerometer extends Widget {
     private Button_obci accelModeButton;
 
     private AccelerometerCapableBoard accelBoard;
+    
+    int thisWidgetFontColor = widgetFontColors.get(mainColorScheme);
+    color thisWidgetBackgroundColor = widgetBackgroundColors[mainColorScheme];
+    color thisGraphBackgroundColor = graphBackgroundColors[mainColorScheme];
+    int thisBoxLineColor = boxLineColors.get(mainColorScheme);
+    int thisGraphLineColor = graphLineColors.get(mainColorScheme);
 
     W_Accelerometer(PApplet _parent) {
         super(_parent); //calls the parent CONSTRUCTOR method of Widget (DON'T REMOVE)
@@ -148,8 +154,11 @@ class W_Accelerometer extends Widget {
         super.draw(); //calls the parent draw() method of Widget (DON'T REMOVE)
 
         pushStyle();
-
-        fill(50);
+        
+        fill(thisWidgetBackgroundColor);
+        rect(x, y, w, h);
+       
+        fill(thisWidgetFontColor);
         textFont(p4, 14);
         textAlign(CENTER,CENTER);
         text("z", polarWindowX, (polarWindowY-polarWindowHeight/2)-12);
@@ -158,7 +167,7 @@ class W_Accelerometer extends Widget {
 
         fill(graphBG);  //pulse window background
         stroke(graphStroke);
-        ellipse(polarWindowX,polarWindowY,polarWindowWidth,polarWindowHeight);
+        ellipse(polarWindowX, polarWindowY, polarWindowWidth, polarWindowHeight);
 
         stroke(180);
         line(polarWindowX-polarWindowWidth/2, polarWindowY, polarWindowX+polarWindowWidth/2, polarWindowY);
@@ -307,6 +316,12 @@ class AccelerometerBar {
     int lastProcessedDataPacketInd = 0;
     
     private AccelerometerCapableBoard accelBoard;
+    
+    int thisWidgetFontColor = widgetFontColors.get(mainColorScheme);
+    color thisWidgetBackgroundColor = widgetBackgroundColors[mainColorScheme];
+    color thisGraphBackgroundColor = graphBackgroundColors[mainColorScheme];
+    int thisBoxLineColor = boxLineColors.get(mainColorScheme);
+    int thisGraphLineColor = graphLineColors.get(mainColorScheme);
 
     AccelerometerBar(PApplet _parent, float accelXyzLimit, int _x, int _y, int _w, int _h) { //channel number, x/y location, height, width
         
@@ -334,7 +349,11 @@ class AccelerometerBar {
         plot.setPointColor(0);
         plot.getXAxis().setAxisLabelText("Time (s)");
         plot.getYAxis().setAxisLabelText("Acceleration (g)");
-        plot.setAllFontProperties("Arial", 0, 14);
+        plot.setAllFontProperties("Arial", thisWidgetFontColor, 14);
+        plot.setBgColor(thisWidgetBackgroundColor);
+        plot.setBoxBgColor(thisGraphBackgroundColor);
+        plot.setBoxLineColor(thisBoxLineColor);
+        plot.setGridLineColor(thisGraphLineColor);
         plot.getXAxis().getAxisLabel().setOffset(float(accBarPadding));
         plot.getYAxis().getAxisLabel().setOffset(float(accBarPadding));
 

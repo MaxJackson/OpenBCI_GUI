@@ -150,7 +150,7 @@ class W_Spectrogram extends Widget {
 
         pushStyle();
         fill(0);
-        rect(x, y, w, h); //draw a black background for the widget
+        rect(x, y, w, h); 
         popStyle();
 
         //draw the spectrogram if the widget is open, and update pixels if isRunning

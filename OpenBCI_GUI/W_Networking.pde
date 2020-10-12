@@ -118,6 +118,12 @@ class W_Networking extends Widget {
     public boolean newDataToSend = false; 
 
     HashMap<String, Object> cp5Map = new HashMap<String, Object>();
+    
+    int thisWidgetFontColor = widgetFontColors.get(mainColorScheme);
+    color thisWidgetBackgroundColor = widgetBackgroundColors[mainColorScheme];
+    color thisGraphBackgroundColor = graphBackgroundColors[mainColorScheme];
+    int thisBoxLineColor = boxLineColors.get(mainColorScheme);
+    int thisGraphLineColor = graphLineColors.get(mainColorScheme);
 
     W_Networking(PApplet _parent) {
         super(_parent);
@@ -292,6 +298,9 @@ class W_Networking extends Widget {
     void draw() {
         super.draw();
         pushStyle();
+        
+        fill(thisWidgetBackgroundColor);
+        rect(x,y,w,h);
 
         showCP5();
 
@@ -315,9 +324,10 @@ class W_Networking extends Widget {
         popStyle();
 
         int headerFontSize = 18;
-        fill(0,0,0);// Background fill: white
+        fill(thisWidgetBackgroundColor);
         textFont(h1, headerFontSize);
-
+        
+        fill(thisWidgetFontColor);
         if (!protocolMode.equals("Serial")) {
             text(" Stream 1",column1,row0);
             text(" Stream 2",column2,row0);

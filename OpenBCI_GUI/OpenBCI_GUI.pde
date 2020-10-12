@@ -231,6 +231,16 @@ int COLOR_SCHEME_ALTERNATIVE_A = 2;
 // int COLOR_SCHEME_ALTERNATIVE_B = 3;
 int colorScheme = COLOR_SCHEME_ALTERNATIVE_A;
 
+int COLOR_SCHEME_LIGHT_MODE = 0;
+int COLOR_SCHEME_DARK_MODE = 1;
+int mainColorScheme = COLOR_SCHEME_LIGHT_MODE;
+
+IntList widgetFontColors;
+color[] widgetBackgroundColors;
+color[] graphBackgroundColors;
+IntList boxLineColors;
+IntList graphLineColors;
+
 PApplet ourApplet;
 
 static CustomOutputStream outputStream;
@@ -264,6 +274,30 @@ void settings() {
 }
 
 void setup() {
+  
+    // Widget Font Colors
+    widgetFontColors = new IntList();
+    widgetFontColors.append(0);
+    widgetFontColors.append(200);
+    
+    // Widget Background Colors
+    widgetBackgroundColors = new color[2];
+    widgetBackgroundColors[0] = (color(255, 255, 255));
+    widgetBackgroundColors[1] = (color(2, 36, 82));
+    
+    // Graph Background Colors
+    graphBackgroundColors = new color[2];
+    graphBackgroundColors[0] = (color(200, 200, 200));
+    graphBackgroundColors[1] = (color(1, 18, 41));
+    
+    graphLineColors = new IntList();
+    graphLineColors.append(0);
+    graphLineColors.append(100);
+    
+    boxLineColors = new IntList();
+    boxLineColors.append(0);
+    boxLineColors.append(100);
+    
     //V1 FONTS
     f1 = createFont("fonts/Raleway-SemiBold.otf", 16);
     f2 = createFont("fonts/Raleway-Regular.otf", 15);

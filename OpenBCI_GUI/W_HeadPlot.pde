@@ -1,7 +1,7 @@
 
 ////////////////////////////////////////////////////
 //
-//    W_template.pde (ie "Widget Template")
+//    W_template.pde (ie "Widget Template") // TODO - This text needs to be updated!
 //
 //    This is a Template Widget, intended to be used as a starting point for OpenBCI Community members that want to develop their own custom widgets!
 //    Good luck! If you embark on this journey, please let us know. Your contributions are valuable to everyone!
@@ -17,6 +17,12 @@ int smoothFac_ind = 3;    //initial index into the smoothFac array = 0.75 to sta
 
 class W_HeadPlot extends Widget {
     HeadPlot headPlot;
+    
+    int thisWidgetFontColor = widgetFontColors.get(mainColorScheme);
+    color thisWidgetBackgroundColor = widgetBackgroundColors[mainColorScheme];
+    color thisGraphBackgroundColor = graphBackgroundColors[mainColorScheme];
+    int thisBoxLineColor = boxLineColors.get(mainColorScheme);
+    int thisGraphLineColor = graphLineColors.get(mainColorScheme);
 
     W_HeadPlot(PApplet _parent){
         super(_parent); //calls the parent CONSTRUCTOR method of Widget (DON'T REMOVE)
@@ -54,6 +60,8 @@ class W_HeadPlot extends Widget {
 
     void draw(){
         super.draw(); //calls the parent draw() method of Widget (DON'T REMOVE)
+        fill(thisWidgetBackgroundColor);
+        rect(x,y,w,h);
         headPlot.draw(); //draw the actual headplot
     }
 

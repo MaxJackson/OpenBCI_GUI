@@ -53,6 +53,7 @@ CallbackListener cb = new CallbackListener() { //used by ControlP5 to clear text
 };
 
 MenuList sourceList;
+MenuList colorSchemeList;
 
 //Global buttons and elements for the control panel (changed within the classes below)
 MenuList bleList;
@@ -117,6 +118,15 @@ int selectedSamplingRate = -1;
 //------------------------------------------------------------------------
 
 public void controlEvent(ControlEvent theEvent) {
+  
+   if (theEvent.isFrom("colorSchemeList")) {
+        Map bob = ((MenuList)theEvent.getController()).getItem(int(theEvent.getValue()));
+        String str = (String)bob.get("headline"); // Get the text displayed in the MenuList
+        int newColorScheme = (int)bob.get("value");
+        output("New Color Scheme = " + str);
+        mainColorScheme = newColorScheme;
+        
+    }
 
     if (theEvent.isFrom("sourceList")) {
         // THIS IS TRIGGERED WHEN A USER SELECTS 'LIVE (from Cyton) or LIVE (from Ganglion), etc...'
@@ -302,6 +312,9 @@ class ControlPanel {
     SampleRateCytonBox sampleRateCytonBox;
     SampleRateGanglionBox sampleRateGanglionBox;
     SDBox sdBox;
+    
+    // Control panel element for color scheme control
+    ColorSchemeBox colorSchemeBox;
 
     //Track Dynamic and Static WiFi mode in Control Panel
     final public String WIFI_DYNAMIC = "dynamic";
@@ -332,6 +345,7 @@ class ControlPanel {
 
         //boxes active when eegDataSource = Normal (OpenBCI)
         dataSourceBox = new DataSourceBox(x, y, w, h, globalPadding);
+        colorSchemeBox = new ColorSchemeBox(x, y+dataSourceBox.h, w, h, globalPadding);
         interfaceBoxCyton = new InterfaceBoxCyton(x + w, dataSourceBox.y, w, h, globalPadding);
         interfaceBoxGanglion = new InterfaceBoxGanglion(x + w, dataSourceBox.y, w, h, globalPadding);
 
@@ -358,7 +372,7 @@ class ControlPanel {
         channelPopup = new ChannelPopup(x+w, y, w, h, globalPadding);
         pollPopup = new PollPopup(x+w,y,w,h,globalPadding);
 
-        initBox = new InitBox(x, (dataSourceBox.y + dataSourceBox.h), w, h, globalPadding);
+        initBox = new InitBox(x, (dataSourceBox.y + dataSourceBox.h + colorSchemeBox.h), w, h, globalPadding);
 
         // Ganglion
         bleBox = new BLEBox(x + w, interfaceBoxGanglion.y + interfaceBoxGanglion.h, w, h, globalPadding);
@@ -411,6 +425,7 @@ class ControlPanel {
         dataLogBoxCyton.update();
         channelCountBox.update();
         synthChannelCountBox.update();
+        colorSchemeBox.update();
 
         //update playback box sizes when dropdown is selected
         recentPlaybackBox.update();
@@ -448,6 +463,7 @@ class ControlPanel {
 
         if (systemMode != 10) { // only draw control panel boxes if system running is false
             dataSourceBox.draw();
+            colorSchemeBox.draw();
             drawStopInstructions = false;
             cp5.setVisible(true);//make sure controlP5 elements are visible
             cp5Popup.setVisible(true);
@@ -561,7 +577,7 @@ class ControlPanel {
             fill(boxColor);
             strokeWeight(1);
             stroke(boxStrokeColor);
-            rect(x, y, w, dataSourceBox.h); //draw background of box
+            rect(x, y, w, dataSourceBox.h+colorSchemeBox.h); //draw background of box
             String stopInstructions = "Press the \"STOP SESSION\" button to change your data source or edit system settings.";
             textAlign(CENTER, TOP);
             textFont(p4, 14);
@@ -1257,6 +1273,45 @@ class DataSourceBox {
         //draw contents of Data Source Box at top of control panel
         //Title
         //checkboxes of system states
+    }
+};
+
+class ColorSchemeBox {
+    int x, y, w, h, padding; //size and position
+    int numItems;
+    int boxHeight = 24;
+    int spacing = 43;
+
+    ColorSchemeBox(int _x, int _y, int _w, int _h, int _padding) {
+        numItems = 2;
+        x = _x;
+        y = _y;
+        w = _w;
+        h = spacing + (numItems * boxHeight);
+        padding = _padding;
+
+        colorSchemeList = new MenuList(cp5, "colorSchemeList", w - padding*2, numItems * boxHeight, p3);
+        colorSchemeList.setPosition(x + padding, y + padding*2 + 13);
+        colorSchemeList.addItem(makeItem("LIGHT MODE", COLOR_SCHEME_LIGHT_MODE));
+        colorSchemeList.addItem(makeItem("DARK MODE", COLOR_SCHEME_DARK_MODE));
+        colorSchemeList.scrollerLength = 10;
+    }
+
+    public void update() {
+
+    }
+
+    public void draw() {
+        pushStyle();
+        fill(boxColor);
+        stroke(boxStrokeColor);
+        strokeWeight(1);
+        rect(x, y, w, h);
+        fill(bgColor);
+        textFont(h3, 16);
+        textAlign(LEFT, TOP);
+        text("COLOR SCHEME", x + padding, y + padding);
+        popStyle();
     }
 };
 

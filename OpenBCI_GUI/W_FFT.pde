@@ -43,7 +43,12 @@ class W_fft extends Widget {
     int xMax = xLimOptions[xLimOptions.length-1];   //maximum possible frequency in FFT
     int FFT_indexLim = int(1.0*xMax*(getNfftSafe()/currentBoard.getSampleRate()));   // maxim value of FFT index
     int yLim = yLimOptions[2];  //maximum value of y axis ... 100 uV
-
+    
+    int thisWidgetFontColor = widgetFontColors.get(mainColorScheme);
+    color thisWidgetBackgroundColor = widgetBackgroundColors[mainColorScheme];
+    color thisGraphBackgroundColor = graphBackgroundColors[mainColorScheme];
+    int thisBoxLineColor = boxLineColors.get(mainColorScheme);
+    int thisGraphLineColor = graphLineColors.get(mainColorScheme);
 
     W_fft(PApplet _parent){
         super(_parent); //calls the parent CONSTRUCTOR method of Widget (DON'T REMOVE)
@@ -67,17 +72,20 @@ class W_fft extends Widget {
         fft_points = new GPointsArray[nchan];
         // println("fft_points.length: " + fft_points.length);
         initializeFFTPlot(_parent);
-
     }
 
     void initializeFFTPlot(PApplet _parent) {
         //setup GPlot for FFT
         fft_plot = new GPlot(_parent, x, y-navHeight, w, h+navHeight); //based on container dimensions
-        fft_plot.setAllFontProperties("Arial", 0, 14);
         fft_plot.getXAxis().setAxisLabelText("Frequency (Hz)");
         fft_plot.getYAxis().setAxisLabelText("Amplitude (uV)");
         fft_plot.setMar(60, 70, 40, 30); //{ bot=60, left=70, top=40, right=30 } by default
         fft_plot.setLogScale("y");
+        fft_plot.setAllFontProperties("Arial", thisWidgetFontColor, 14);
+        fft_plot.setBgColor(thisWidgetBackgroundColor);
+        fft_plot.setBoxBgColor(thisGraphBackgroundColor);
+        fft_plot.setBoxLineColor(thisBoxLineColor);
+        fft_plot.setGridLineColor(thisGraphLineColor);
 
         fft_plot.setYLim(0.1, yLim);
         int _nTicks = int(yLim/10 - 1); //number of axis subdivisions

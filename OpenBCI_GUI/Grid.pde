@@ -11,6 +11,12 @@ class Grid {
     private final int pad = 5;
 
     private String[][] strings;
+    
+    int thisWidgetFontColor = widgetFontColors.get(mainColorScheme);
+    color thisWidgetBackgroundColor = widgetBackgroundColors[mainColorScheme];
+    color thisGraphBackgroundColor = graphBackgroundColors[mainColorScheme];
+    int thisBoxLineColor = boxLineColors.get(mainColorScheme);
+    int thisGraphLineColor = graphLineColors.get(mainColorScheme);
 
     Grid(int _numRows, int _numCols, int _rowHeight) {
         numRows = _numRows;
@@ -26,10 +32,10 @@ class Grid {
     public void draw() {
         pushStyle();
         textAlign(LEFT);        
-        stroke(0);
-        fill(0, 0, 0, 255);
+        stroke(thisGraphLineColor);
         textFont(p5, 12);
 
+        fill(thisWidgetFontColor);
         // draw row lines
         for (int i = 0; i < numRows - 1; i++) {
             line(x, y + rowOffset[i], x + w, y + rowOffset[i]);

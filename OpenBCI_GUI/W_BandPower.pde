@@ -18,6 +18,12 @@ class W_BandPower extends Widget {
     GPlot bp_plot;
     public ChannelSelect bpChanSelect;
     boolean prevChanSelectIsVisible = false;
+    
+    int thisWidgetFontColor = widgetFontColors.get(mainColorScheme);
+    color thisWidgetBackgroundColor = widgetBackgroundColors[mainColorScheme];
+    color thisGraphBackgroundColor = graphBackgroundColors[mainColorScheme];
+    int thisBoxLineColor = boxLineColors.get(mainColorScheme);
+    int thisGraphLineColor = graphLineColors.get(mainColorScheme);
 
     W_BandPower(PApplet _parent) {
         super(_parent); //calls the parent CONSTRUCTOR method of Widget (DON'T REMOVE)
@@ -46,6 +52,12 @@ class W_BandPower extends Widget {
         bp_plot.getXAxis().getAxisLabel().setOffset(42f);
         bp_plot.startHistograms(GPlot.VERTICAL);
         bp_plot.getHistogram().setDrawLabels(true);
+        
+        bp_plot.setAllFontProperties("Arial", thisWidgetFontColor, 14);
+        bp_plot.setBgColor(thisWidgetBackgroundColor);
+        bp_plot.setBoxBgColor(thisGraphBackgroundColor);
+        bp_plot.setBoxLineColor(thisBoxLineColor);
+        bp_plot.setGridLineColor(thisGraphLineColor);
 
         //setting border of histograms to match BG
         bp_plot.getHistogram().setLineColors(new color[]{
@@ -57,7 +69,6 @@ class W_BandPower extends Widget {
         bp_plot.getHistogram().setBgColors(new color[] {
                 color((int)channelColors[2], 150), color((int)channelColors[1], 150),
                 color((int)channelColors[3], 150), color((int)channelColors[4], 150), color((int)channelColors[6], 150)
-
             }
         );
 

@@ -124,6 +124,12 @@ class W_emg extends Widget {
     Boolean emgAdvanced = false;
 
     PApplet parent;
+    
+    int thisWidgetFontColor = widgetFontColors.get(mainColorScheme);
+    color thisWidgetBackgroundColor = widgetBackgroundColors[mainColorScheme];
+    color thisGraphBackgroundColor = graphBackgroundColors[mainColorScheme];
+    int thisBoxLineColor = boxLineColors.get(mainColorScheme);
+    int thisGraphLineColor = graphLineColors.get(mainColorScheme);
 
     W_emg (PApplet _parent) {
         super(_parent); //calls the parent CONSTRUCTOR method of Widget (DON'T REMOVE)
@@ -236,7 +242,7 @@ class W_emg extends Widget {
 
         pushStyle();
         noStroke();
-        fill(255);
+        fill(thisWidgetBackgroundColor);
         rect(x, y, w, h);
 
         if (emgAdvanced) {
@@ -280,11 +286,11 @@ class W_emg extends Widget {
                 //circle for outer threshold
                 noFill();
                 strokeWeight(1);
-                stroke(red(bgColor), green(bgColor), blue(bgColor), 150);
+                stroke(thisWidgetFontColor);
                 ellipse(2*colOffset/8, rowOffset / 2, scaleFactor * motorWidgets[i * colNum + j].upperThreshold, scaleFactor * motorWidgets[i * colNum + j].upperThreshold);
 
                 //circle for inner threshold
-                stroke(red(bgColor), green(bgColor), blue(bgColor), 150);
+                stroke(thisWidgetFontColor);
                 ellipse(2*colOffset/8, rowOffset / 2, scaleFactor * motorWidgets[i * colNum + j].lowerThreshold, scaleFactor * motorWidgets[i * colNum + j].lowerThreshold);
 
                 int _x = int(5*colOffset/8);
@@ -299,7 +305,8 @@ class W_emg extends Widget {
 
                 //draw background bar container for mapped uV value indication
                 strokeWeight(1);
-                stroke(red(bgColor), green(bgColor), blue(bgColor), 150);
+                // stroke(red(bgColor), green(bgColor), blue(bgColor), 150);
+                stroke(thisWidgetFontColor);
                 noFill();
                 rect(_x, _y, _w, _h);
 
@@ -314,7 +321,7 @@ class W_emg extends Widget {
                 //draw channel number at upper left corner of row/column cell
                 pushStyle();
                 stroke(0);
-                fill(bgColor);
+                fill(thisWidgetFontColor);
                 int _chan = index+1;
                 textFont(p5, 12);
                 text(_chan + "", 10, 20);
